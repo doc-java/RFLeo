@@ -54,18 +54,18 @@ void setup(){
   Serial.println("Ready to go. Press 1 to begin data transfer.");
 }
 
+int maxIterations = 10;
 
 void loop() {
-  if (Serial.available() > 0) {
-
-    if(Serial.read() == '1'){ //start the blind data transfer
-
+    
+    if(Serial.available() > 0 && Serial.read() == '1'){ 
+      //start the blind data transfer
       Serial.println("Sending");
       Serial.flush();
 
       radio.stopListening(); 
 
-      for(int gen = 0; gen < 10; gen++){
+      for(int gen = 0; gen < maxIterations; gen++){
         
         for(int i = 0; i < totalData; i++){
           radio.write( &blindData[i], packetSize );
@@ -76,7 +76,5 @@ void loop() {
       Serial.println("Finished sending all blind data");
       Serial.println(gendatatot);
     }
-
-  }
 
 }
